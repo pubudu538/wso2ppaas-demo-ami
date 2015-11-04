@@ -1,0 +1,103 @@
+{
+    "type": "wso2brs-210-worker",
+    "category": "framework",
+    "provider": "wso2",
+    "host": "brs.wso2.org",
+    "displayName": "WSO2 BRS 2.1.0 Worker",
+    "description": "WSO2 BRS 2.1.0 Worker Cartridge",
+    "version": "2.1.0",
+    "multiTenant": true,
+    "loadBalancingIPType": "public",
+    "portMapping": [
+        {
+            "name": "mgt-http",
+            "protocol": "http",
+            "port": 9763,
+            "proxyPort": 80
+        },
+        {
+            "name": "mgt-https",
+            "protocol": "https",
+            "port": 9443,
+            "proxyPort": 443
+        }
+    ],
+    "iaasProvider": [
+        {
+            "type": "ec2",
+            "imageId": "{{EC2_BASE_AMI}}",
+            "property": [
+                {
+                    "name": "instanceType",
+                    "value": "{{EC2_INSTANCE_TYPE}}"
+                },
+                {
+                    "name": "securityGroupIds",
+                    "value": "{{EC2_SECURITY_GROUP}}"
+                },
+                {
+                    "name":"tag:Name",
+                    "value":"WSO2 PPaaS BRS Worker"
+                },
+                {
+                    "name":"tag:User",
+                    "value":"{{EC2_TAG_USER}}"
+                }
+            ]
+        }
+    ],
+    "property": [
+        {
+            "name": "payload_parameter.CONFIG_PARAM_CLUSTERING",
+            "value": "true"
+        },
+        {
+            "name": "payload_parameter.LB_IP",
+            "value": "{{LB_IP}}"
+        },
+                {
+            "name": "KUBERNETES_SERVICE_SESSION_AFFINITY",
+            "value": "ClientIP"
+        },
+        {
+            "name": "payload_parameter.START_CMD",
+            "value": "PCA"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_REGISTRY_DB_URL",
+            "value": "{{REG_420_DB_URL}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_REGISTRY_DB_USER_NAME",
+            "value": "{{DB_USER_NAME}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_REGISTRY_DB_PASSWORD",
+            "value": "{{DB_PASSWORD}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_CONFIG_DB_URL",
+            "value": "{{BRS_210_CONFIG_DB_URL}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_CONFIG_DB_USER_NAME",
+            "value": "{{DB_USER_NAME}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_CONFIG_DB_PASSWORD",
+            "value": "{{DB_PASSWORD}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_USER_MGT_DB_URL",
+            "value": "{{UM_420_DB_URL}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_USER_MGT_DB_USER_NAME",
+            "value": "{{DB_USER_NAME}}"
+        },
+        {
+            "name": "payload_parameter.CONFIG_PARAM_USER_MGT_DB_PASSWORD",
+            "value": "{{DB_PASSWORD}}"
+        }
+    ]
+}

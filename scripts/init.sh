@@ -3,8 +3,9 @@ SCRIPTS_PATH=/home/ubuntu/scripts
 PACKS_PATH=/home/ubuntu/packs
 HOST_IP="localhost"
 HOST_PORT=9443
+PPAAS_VERSION=4.1.1
 
-echo "Initializing WSO2 PPaaS 4.1.0 Demo Instance..."
+echo "Initializing WSO2 PPaaS $PPAAS_VERSION Demo Instance..."
 
 mkdir -p /tmp/payload
 wget http://instance-data/latest/user-data -O /tmp/payload/launch-params
@@ -28,12 +29,12 @@ popd
 if [[ $1 == "clean" ]] ; then
 
    # clean /opt/ dir
-   sudo rm -rf /opt/wso2ppaas-4.1.0/
+   sudo rm -rf /opt/wso2ppaas-$PPAAS_VERSION/
    sudo rm -rf /opt/wso2das-3.0.0/
    sudo rm -rf /opt/apache-stratos-nginx-extension-4.1.4/   
    sudo rm -rf /opt/apache-activemq-5.12.0/
 
-   unzip -q $PACKS_PATH/wso2ppaas-4.1.0.zip -d /opt
+   unzip -q $PACKS_PATH/wso2ppaas-$PPAAS_VERSION.zip -d /opt
    unzip -q $PACKS_PATH/wso2das-3.0.0.zip -d /opt
    unzip -q $PACKS_PATH/apache-stratos-nginx-extension-4.1.4.zip -d /opt   
    tar -zxf $PACKS_PATH/apache-activemq-5.12.0-bin.tar.gz -C /opt   
@@ -50,8 +51,8 @@ echo "Starting WSO2 DAS 3.0.0..."
 /opt/wso2das-3.0.0/bin/wso2server.sh start
 sleep 1m
 
-echo "Starting WSO2 PPaaS 4.1.0..."
-/opt/wso2ppaas-4.1.0/bin/wso2server.sh start
+echo "Starting WSO2 PPaaS $PPAAS_VERSION..."
+/opt/wso2ppaas-$PPAAS_VERSION/bin/wso2server.sh start
 
 echo "Starting AWS Extension..."
 pushd /opt/apache-stratos-nginx-extension-4.1.4/
@@ -73,15 +74,18 @@ done
 echo "Deploying artifacts..."
 
 $SCRIPTS_PATH/deploy-common.sh
-$SCRIPTS_PATH/deploy-apim-191.sh
-$SCRIPTS_PATH/deploy-as-521.sh
-$SCRIPTS_PATH/deploy-bps-350.sh
-$SCRIPTS_PATH/deploy-brs-210.sh
-$SCRIPTS_PATH/deploy-das-300.sh
-$SCRIPTS_PATH/deploy-dss-322.sh
-$SCRIPTS_PATH/deploy-esb-481.sh
-$SCRIPTS_PATH/deploy-greg-500.sh
-$SCRIPTS_PATH/deploy-is-500.sh
-$SCRIPTS_PATH/deploy-mb-300.sh
+$SCRIPTS_PATH/create-apim-191.sh
+$SCRIPTS_PATH/create-as-521.sh
+$SCRIPTS_PATH/create-bps-350.sh
+$SCRIPTS_PATH/create-brs-210.sh
+$SCRIPTS_PATH/create-das-300.sh
+$SCRIPTS_PATH/create-dss-322.sh
+$SCRIPTS_PATH/create-esb-481.sh
+$SCRIPTS_PATH/create-greg-500.sh
+$SCRIPTS_PATH/create-is-500.sh
+$SCRIPTS_PATH/create-mb-300.sh
+$SCRIPTS_PATH/create-cep-400.sh
+$SCRIPTS_PATH/create-esb-490.sh
+$SCRIPTS_PATH/create-greg-510.sh
 
 echo "End of init script"

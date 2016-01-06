@@ -24,6 +24,9 @@ if [[ $1 == "clean" ]]; then
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_esb_481;'
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_greg_500;'
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_mb_300;'
+   mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_cep_400;'
+   mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_esb_490;'
+   mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_greg_510;'
 
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE das_300_analytics_fs;'
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE das_300_analytics_event_store;'
@@ -70,6 +73,9 @@ mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS ppaa
 
 mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS mb_300_metrics;'
 mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS mb_300_store;'
+mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_cep_400;'
+mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_esb_490;'
+mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_greg_510;'
 
 echo "Populating userstore-420..."
 mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} userstore_420 < ${DB_SCRIPTS_PATH}/carbon-420/mysql.sql
@@ -189,3 +195,11 @@ mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_greg_500 < ${DB_SCRIPTS_P
 echo "Populating config mb-300..."
 mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_mb_300 < ${DB_SCRIPTS_PATH}/carbon-44x/mysql.sql
 
+echo "Populating config cep-400..."
+mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_cep_400 < ${DB_SCRIPTS_PATH}/carbon-44x/mysql.sql
+
+echo "Populating config esb-490..."
+mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_esb_490 < ${DB_SCRIPTS_PATH}/carbon-44x/mysql.sql
+
+echo "Populating config greg-510..."
+mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_greg_510 < ${DB_SCRIPTS_PATH}/carbon-44x/mysql.sql

@@ -3,13 +3,13 @@ SCRIPTS_PATH=/home/ubuntu/scripts
 PACKS_PATH=/home/ubuntu/packs
 SAMPLES_PATH=/home/ubuntu/samples
 CARTRIDGES_REPO_PATH=/home/ubuntu/wso2-repos/private-paas-cartridges.git
-
+PPAAS_VERSION=4.1.1
 
 echo "Undeploying all artifacts..."
 $SCRIPTS_PATH/undeploy-all.sh
 
-echo "Stopping WSO2 PPaaS 4.1.0..."
-/opt/wso2ppaas-4.1.0/bin/wso2server.sh stop
+echo "Stopping WSO2 PPaaS $PPAAS_VERSION..."
+/opt/wso2ppaas-$PPAAS_VERSION/bin/wso2server.sh stop
 
 echo "Stopping WSO2 DAS 3.0.0..."
 /opt/wso2das-3.0.0/bin/wso2server.sh stop
@@ -41,7 +41,7 @@ echo "Cleaning samples..."
 sudo rm -rf $SAMPLES_PATH/*
 
 echo "Cleaning logs..."
-sudo rm -rf /opt/wso2ppaas-4.1.0/repository/logs/*
+sudo rm -rf /opt/wso2ppaas-$PPAAS_VERSION/repository/logs/*
 sudo rm -rf /opt/wso2das-3.0.0/repository/logs/*
 sudo rm /opt/apache-stratos-nginx-extension-4.1.4/*.log
 sudo rm -rf /opt/logs
@@ -50,12 +50,12 @@ sudo rm -rf /opt/logs
 if [[ $1 == "clean" ]] ; then
    echo "Cleaning up deployment and redeploying packs..."
    # clean /opt/ dir
-   sudo rm -rf /opt/wso2ppaas-4.1.0/
+   sudo rm -rf /opt/wso2ppaas-$PPAAS_VERSION/
    sudo rm -rf /opt/wso2das-3.0.0/
    sudo rm -rf /opt/apache-stratos-nginx-extension-4.1.4/   
    sudo rm -rf /opt/apache-activemq-5.12.0/
 
-   unzip -q $PACKS_PATH/wso2ppaas-4.1.0.zip -d /opt
+   unzip -q $PACKS_PATH/wso2ppaas-$PPAAS_VERSION.zip -d /opt
    unzip -q $PACKS_PATH/wso2das-3.0.0.zip -d /opt
    unzip -q $PACKS_PATH/apache-stratos-nginx-extension-4.1.4.zip -d /opt   
    tar -zxf $PACKS_PATH/apache-activemq-5.12.0-bin.tar.gz -C /opt   

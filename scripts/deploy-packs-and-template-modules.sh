@@ -3,11 +3,11 @@
 CARTRIDGES_REPO_PATH=/home/ubuntu/wso2-repos/private-paas-cartridges.git
 TEMPLATES_PATH=/home/ubuntu/template_modules
 PUPPET_PATH=/etc/puppet
-VERSION=4.1.1-SNAPSHOT
+VERSION=4.1.3
 PRIVATE_IP=`wget -qO- http://instance-data/latest/meta-data/local-ipv4`
 PUBLIC_IP=`wget -qO- http://instance-data/latest/meta-data/public-ipv4`
 PACKS_PATH=/home/ubuntu/packs
-puppet_mode=false
+puppet_mode=true
 force_mode=false
 
 while getopts ":pf" opts
@@ -66,7 +66,7 @@ chmod -R 755 ./
 
 # Base params
 export PPAAS_CARTRIDGE_VERSION=${VERSION}
-export PCA_VERSION=4.1.4
+export PCA_VERSION=4.1.1.wso2v1
 export MB_IP=${PRIVATE_IP}
 export LB_IP=${PUBLIC_IP}
 export CEP_URLS=${PRIVATE_IP}:7711
@@ -117,6 +117,10 @@ export IS_500_CONFIG_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/config_db_is_500
 export MB_300_CONFIG_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/config_db_mb_300
 export MB_300_METRICS_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/mb_300_metrics
 export MB_300_STORE_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/mb_300_store
+export CEP_400_CONFIG_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/config_db_cep_400
+export ESB_481_CONFIG_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/config_db_esb_481
+export ESB_490_CONFIG_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/config_db_esb_490
+export GREG_510_CONFIG_DB_URL=jdbc:mysql://${PRIVATE_IP}:3306/config_db_greg_510
 
 # PPaaS monitoring and metering with DAS 3.0.0
 export PPAAS_DAS_METERING_URL=https://${PUBLIC_IP}:9444/portal/dashboards/ppaas-metering-dashboard
@@ -248,9 +252,39 @@ if [[ $puppet_mode == "true" ]]; then
     cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2mb300/plugins/
     popd
 
+    pushd ${CARTRIDGES_REPO_PATH}/wso2cep/4.0.0/template-module/
+    mvn -q clean install
+    cp target/wso2cep-4.0.0-template-module-${VERSION}.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2cep400/packs/
+    cp ../plugins/*.py ${PUPPET_PATH}/modules/wso2installer/files/wso2cep400/plugins/
+    cp ../plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2cep400/plugins/
+
+    cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.py ${PUPPET_PATH}/modules/wso2installer/files/wso2cep400/plugins/
+    cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2cep400/plugins/
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2esb/4.9.0/template-module/
+    mvn -q clean install
+    cp target/wso2esb-4.9.0-template-module-${VERSION}.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2esb490/packs/
+    cp ../plugins/*.py ${PUPPET_PATH}/modules/wso2installer/files/wso2esb490/plugins/
+    cp ../plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2esb490/plugins/
+
+    cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.py ${PUPPET_PATH}/modules/wso2installer/files/wso2esb490/plugins/
+    cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2esb490/plugins/
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2greg/5.1.0/template-module/
+    mvn -q clean install
+    cp target/wso2greg-5.1.0-template-module-${VERSION}.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2greg510/packs/
+    cp ../plugins/*.py ${PUPPET_PATH}/modules/wso2installer/files/wso2greg510/plugins/
+    cp ../plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2greg510/plugins/
+
+    cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.py ${PUPPET_PATH}/modules/wso2installer/files/wso2greg510/plugins/
+    cp ${CARTRIDGES_REPO_PATH}/common/plugins/*.yapsy-plugin ${PUPPET_PATH}/modules/wso2installer/files/wso2greg510/plugins/
+    popd
+
     cp ${PACKS_PATH}/wso2ppaas-configurator-${VERSION}.zip ${PUPPET_PATH}/modules/configurator/files
     cp ${PACKS_PATH}/jdk-7u80-linux-x64.tar.gz ${PUPPET_PATH}/modules/java/files/
-    cp ${PACKS_PATH}/apache-stratos-python-cartridge-agent-4.1.4.zip ${PUPPET_PATH}/modules/python_agent/files
+    cp ${PACKS_PATH}/apache-stratos-python-cartridge-agent-4.1.1.wso2v1.zip ${PUPPET_PATH}/modules/python_agent/files
 
     cp ${PACKS_PATH}/wso2am-1.9.1.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2am191/packs/
     cp ${PACKS_PATH}/wso2as-5.2.1.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2as521/packs/
@@ -261,8 +295,11 @@ if [[ $puppet_mode == "true" ]]; then
     cp ${PACKS_PATH}/wso2esb-4.8.1.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2esb481/packs/
     cp ${PACKS_PATH}/wso2greg-5.0.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2greg500/packs/
     cp ${PACKS_PATH}/wso2isaskm/wso2is-5.0.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2isaskm500/packs/
+    cp ${PACKS_PATH}/wso2cep-4.0.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2cep400/packs/
+    cp ${PACKS_PATH}/wso2esb-4.9.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2esb490/packs/
+    cp ${PACKS_PATH}/wso2greg-5.1.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2greg510/packs/
 
     #cp ${PACKS_PATH}/wso2is-5.0.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2is500/packs/
     cp ${PACKS_PATH}/wso2isaskm/wso2is-5.0.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2is500/packs/
-    cp ${PACKS_PATH}/wso2mb-3.0.0-BETA.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2mb300/packs/
+    cp ${PACKS_PATH}/wso2mb-3.0.0.zip ${PUPPET_PATH}/modules/wso2installer/files/wso2mb300/packs/
 fi

@@ -57,7 +57,7 @@
         },
         {
             "name":"payload_parameter.CONFIG_PARAM_REGISTRY_DB_URL",
-            "value":"REG_44x_DB_URL"
+            "value":"{{REG_44x_DB_URL}}"
         },
         {
             "name":"payload_parameter.CONFIG_PARAM_REGISTRY_DB_USER_NAME",

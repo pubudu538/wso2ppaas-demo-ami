@@ -27,6 +27,7 @@ if [[ $1 == "clean" ]]; then
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_cep_400;'
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_esb_490;'
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_greg_510;'
+   mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE config_db_as_530;'
 
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE das_300_analytics_fs;'
    mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'DROP DATABASE das_300_analytics_event_store;'
@@ -76,6 +77,7 @@ mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS mb_3
 mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_cep_400;'
 mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_esb_490;'
 mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_greg_510;'
+mysql -u ${DB_USER_NAME} -p${DB_PASSWORD} -e 'CREATE DATABASE IF NOT EXISTS config_db_as_530;'
 
 echo "Populating userstore-420..."
 mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} userstore_420 < ${DB_SCRIPTS_PATH}/carbon-420/mysql.sql
@@ -203,3 +205,6 @@ mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_esb_490 < ${DB_SCRIPTS_PA
 
 echo "Populating config greg-510..."
 mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_greg_510 < ${DB_SCRIPTS_PATH}/carbon-44x/mysql.sql
+
+echo "Populating config as-530..."
+mysql -f -u ${DB_USER_NAME} -p${DB_PASSWORD} config_db_as_530 < ${DB_SCRIPTS_PATH}/carbon-44x/mysql.sql

@@ -45,6 +45,10 @@
         {
             "name": "payload_parameter.PUPPET_HOSTNAME",
             "value": "{{PUPPET_MASTER_HOSTNAME}}"
+        },
+        {
+            "name": "LOAD_BALANCER_IPS",
+            "value": "{{LB_IP}}"
         }
     ]
 }

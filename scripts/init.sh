@@ -31,12 +31,12 @@ if [[ $1 == "clean" ]] ; then
    # clean /opt/ dir
    sudo rm -rf /opt/wso2ppaas-$PPAAS_VERSION/
    sudo rm -rf /opt/wso2das-3.0.0/
-   sudo rm -rf /opt/apache-stratos-nginx-extension-4.1.4/   
+   sudo rm -rf /opt/apache-stratos-nginx-extension-4.1.5/
    sudo rm -rf /opt/apache-activemq-5.12.0/
 
    unzip -q $PACKS_PATH/wso2ppaas-$PPAAS_VERSION.zip -d /opt
    unzip -q $PACKS_PATH/wso2das-3.0.0.zip -d /opt
-   unzip -q $PACKS_PATH/apache-stratos-nginx-extension-4.1.4.zip -d /opt   
+   unzip -q $PACKS_PATH/apache-stratos-nginx-extension-4.1.5.zip -d /opt
    tar -zxf $PACKS_PATH/apache-activemq-5.12.0-bin.tar.gz -C /opt   
 fi
 
@@ -55,8 +55,8 @@ echo "Starting WSO2 PPaaS $PPAAS_VERSION..."
 /opt/wso2ppaas-$PPAAS_VERSION/bin/wso2server.sh start
 
 echo "Starting AWS Extension..."
-pushd /opt/apache-stratos-nginx-extension-4.1.4/
-sudo nohup ./bin/nginx-extension.sh > /opt/apache-stratos-nginx-extension-4.1.4/nginx-extension.log 2>&1 &
+pushd /opt/apache-stratos-nginx-extension-4.1.5/
+sudo nohup ./bin/nginx-extension.sh > /opt/apache-stratos-nginx-extension-4.1.5/nginx-extension.log 2>&1 &
 popd
 
 echo "Waiting for servers to be active..."
@@ -87,5 +87,6 @@ $SCRIPTS_PATH/create-mb-300.sh
 $SCRIPTS_PATH/create-cep-400.sh
 $SCRIPTS_PATH/create-esb-490.sh
 $SCRIPTS_PATH/create-greg-510.sh
+$SCRIPTS_PATH/create-as-530.sh
 
 echo "End of init script"

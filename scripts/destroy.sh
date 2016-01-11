@@ -43,7 +43,7 @@ sudo rm -rf $SAMPLES_PATH/*
 echo "Cleaning logs..."
 sudo rm -rf /opt/wso2ppaas-$PPAAS_VERSION/repository/logs/*
 sudo rm -rf /opt/wso2das-3.0.0/repository/logs/*
-sudo rm /opt/apache-stratos-nginx-extension-4.1.4/*.log
+sudo rm /opt/apache-stratos-nginx-extension-4.1.5/*.log
 sudo rm -rf /opt/logs
 
 
@@ -52,12 +52,12 @@ if [[ $1 == "clean" ]] ; then
    # clean /opt/ dir
    sudo rm -rf /opt/wso2ppaas-$PPAAS_VERSION/
    sudo rm -rf /opt/wso2das-3.0.0/
-   sudo rm -rf /opt/apache-stratos-nginx-extension-4.1.4/   
+   sudo rm -rf /opt/apache-stratos-nginx-extension-4.1.5/
    sudo rm -rf /opt/apache-activemq-5.12.0/
 
    unzip -q $PACKS_PATH/wso2ppaas-$PPAAS_VERSION.zip -d /opt
    unzip -q $PACKS_PATH/wso2das-3.0.0.zip -d /opt
-   unzip -q $PACKS_PATH/apache-stratos-nginx-extension-4.1.4.zip -d /opt   
+   unzip -q $PACKS_PATH/apache-stratos-nginx-extension-4.1.5.zip -d /opt
    tar -zxf $PACKS_PATH/apache-activemq-5.12.0-bin.tar.gz -C /opt   
 
 
@@ -106,6 +106,26 @@ if [[ $1 == "clean" ]] ; then
     popd
 
     pushd ${CARTRIDGES_REPO_PATH}/wso2mb/3.0.0/template-module/
+    mvn -q clean
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2esb/4.9.0/template-module/
+    mvn -q clean
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2greg/5.1.0/template-module/
+    mvn -q clean
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2as/5.3.0/template-module/
+    mvn -q clean
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2cep/4.0.0/template-module/
+    mvn -q clean
+    popd
+
+    pushd ${CARTRIDGES_REPO_PATH}/wso2as/5.3.0/template-module/
     mvn -q clean
     popd
 fi
